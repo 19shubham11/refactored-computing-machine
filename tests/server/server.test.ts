@@ -8,9 +8,9 @@ app.use('/', router)
 
 const request = supertest(app)
 
-describe('Server test', () => {
+describe('API Integration Tests', () => {
     describe('/internal/health', () => {
-        it('Should return 200', async () =>{
+        it('Should return 200', async () => {
             const res = await request.get('/internal/health')
             const { status, text } = res
 
@@ -42,8 +42,6 @@ describe('Server test', () => {
 
             assert.strictEqual(status, 400)
             assert.match(text, /Add search param/)
-
         })
-
     })
 })

@@ -2,10 +2,10 @@ import { GET } from '../helpers/httpHelpers'
 import config from '../config'
 import { UnsplashResponse } from './model'
 
-async function getRandomImage(query: string = ''): Promise<string>{
+async function getRandomImage(query: string = ''): Promise<string> {
     const queryParams = new URLSearchParams({
         client_id: config.image.client_id,
-        query
+        query,
     })
 
     try {
@@ -19,7 +19,7 @@ async function getRandomImage(query: string = ''): Promise<string>{
             throw new Error('Request failed!')
         }
     } catch (err) {
-       throw new Error('Request failed!') 
+        throw new Error('Request failed!')
     }
 }
 

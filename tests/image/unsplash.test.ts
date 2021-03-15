@@ -15,26 +15,18 @@ describe('Unsplash', () => {
             const mockResp: UnsplashResponse = {
                 id: '3242352',
                 urls: {
-                    regular: mockURL
-                }
+                    regular: mockURL,
+                },
             }
 
-            nock(config.image.baseURL)
-                .persist()
-                .get(config.image.randomPath)
-                .query(true)
-                .reply(200, mockResp)
-            
+            nock(config.image.baseURL).persist().get(config.image.randomPath).query(true).reply(200, mockResp)
+
             const imageURL = await unsplash.getRandomImage()
             assert.strictEqual(imageURL, mockURL)
         })
 
-        it('Should throw an error when the API does not return 200', async() => {
-            nock(config.image.baseURL)
-                .persist()
-                .get(config.image.randomPath)
-                .query(true)
-                .reply(400)
+        it('Should throw an error when the API does not return 200', async () => {
+            nock(config.image.baseURL).persist().get(config.image.randomPath).query(true).reply(400)
 
             await assert.rejects(unsplash.getRandomImage(), (err) => {
                 assert.match(err.message, /Request failed/)

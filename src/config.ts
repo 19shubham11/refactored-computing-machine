@@ -11,11 +11,11 @@ interface ServerConfig {
 const unsplashConfig: UnsplashConfig = {
     baseURL: 'https://api.unsplash.com',
     randomPath: '/photos/random',
-    client_id: 'welQXbMUild3TvEuB_RUi5V1DPb1gQ9c_9mS17bEJI8'
+    client_id: process.env.UNSPLASH_KEY || '',
 }
 
 const serverConfig: ServerConfig = {
-    port: 2021
+    port: 2021,
 }
 
 interface AppConfig {
@@ -25,7 +25,7 @@ interface AppConfig {
 
 const config: AppConfig = {
     server: serverConfig,
-    image: unsplashConfig
+    image: unsplashConfig,
 }
 
 export default config

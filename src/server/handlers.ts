@@ -27,4 +27,4 @@ async function searchImage(req: Request, res: Response) {
     }
 }
 
-export { checkHealth, getRandomImage, searchImage}
+export { checkHealth, getRandomImage, searchImage }
