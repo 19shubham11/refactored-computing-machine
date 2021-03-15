@@ -5,7 +5,6 @@ function checkHealth(_: Request, res: Response) {
     res.send('OK')
 }
 
-
 async function getRandomImage(_: Request, res: Response) {
     try {
         const url = await image.getRandomImage()
