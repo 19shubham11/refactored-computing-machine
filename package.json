@@ -2,7 +2,7 @@
   "name": "wallpaper-app",
   "version": "1.0.0",
   "description": "",
-  "main": "dest/index.js",
+  "main": "dest/server/index.js",
   "scripts": {
     "build": "tsc --p tsconfig.json",
     "start": "node .",
