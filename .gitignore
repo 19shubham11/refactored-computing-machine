@@ -5,3 +5,4 @@ npm-debug.log
 *.gz
 .DS_Store
 dest/
+todo.txt
