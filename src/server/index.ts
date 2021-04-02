@@ -1,10 +1,11 @@
-import express from 'express'
+import fastify from 'fastify'
 import { router } from './routes'
+
 import config from '../config'
 
-const app = express()
-app.use('/', router)
+const server = fastify()
+server.register(router)
 
-app.listen(config.server.port, () => {
+server.listen(config.server.port, () => {
     console.info(`Server started on port ${config.server.port}`)
 })

@@ -1,29 +1,31 @@
-import { Request, Response } from 'express'
+import { FastifyRequest, FastifyReply } from 'fastify'
 import * as image from '../images/unsplash'
+import { QueryParams } from './models'
 
-function checkHealth(_: Request, res: Response) {
-    res.send('OK')
+function checkHealth(_: FastifyRequest, reply: FastifyReply) {
+    reply.send('OK')
 }
 
-async function getRandomImage(_: Request, res: Response) {
+async function getRandomImage(_: FastifyRequest, reply: FastifyReply) {
     try {
         const url = await image.getRandomImage()
-        res.redirect(url)
+        reply.redirect(url)
     } catch (err) {
-        res.status(500).send('Internal Server Error')
+        reply.code(500).send('Internal Server Error')
     }
 }
 
-async function searchImage(req: Request, res: Response) {
-    const query = req.query.q as string
-    if (!query) {
-        return res.status(400).send('Add search param!')
+async function searchImage(req: FastifyRequest, reply: FastifyReply) {
+    const query = req.query as QueryParams
+    if (!query.q) {
+        return reply.code(400).send('Add search param!')
     }
     try {
-        const url = await image.getRandomImage(query)
-        res.redirect(url)
+        const { q } = query
+        const url = await image.getRandomImage(q)
+        reply.redirect(url)
     } catch (err) {
-        res.status(500).send('Internal Server Error')
+        reply.code(500).send('Internal Server Error')
     }
 }
 
