@@ -1,11 +1,17 @@
 import fastify from 'fastify'
 import assert from 'assert'
 import { router } from '../../src/server/routes'
+import * as image from '../../src/images/unsplash'
 
 const server = fastify()
 server.register(router)
 
 describe('API Integration Tests', () => {
+    afterEach(() => {
+        jest.restoreAllMocks()
+        jest.clearAllMocks()
+    })
+
     afterAll(async () => {
         await server.close()
     })
@@ -27,6 +33,15 @@ describe('API Integration Tests', () => {
 
             assert.strictEqual(statusCode, 302)
         })
+
+        it('should return 500 if image API returns 500', async () => {
+            jest.spyOn(image, 'getRandomImage').mockImplementation(() => {
+                return Promise.reject('oh')
+            })
+            const res = await server.inject().get('/random')
+            const { statusCode } = res
+            assert.strictEqual(statusCode, 500)
+        })
     })
 
     describe('/random/search', () => {
@@ -43,6 +58,15 @@ describe('API Integration Tests', () => {
 
             assert.strictEqual(statusCode, 400)
             assert.match(body, /Add search param/)
+        })
+
+        it('should return 500 if image API returns 500', async () => {
+            jest.spyOn(image, 'getRandomImage').mockImplementation(() => {
+                return Promise.reject('oh')
+            })
+            const res = await server.inject().get('/random/search?q=dog')
+            const { statusCode } = res
+            assert.strictEqual(statusCode, 500)
         })
     })
 })
